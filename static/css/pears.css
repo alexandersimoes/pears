@@ -1,0 +1,140 @@
+body {
+  margin: 0;
+  padding: 0;
+/*          font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Open Sans", sans-serif;*/
+  color: #666;
+  font: 400 13px/21px 'open sans';
+
+  font-size: 13px;
+  font-weight: 300;
+  letter-spacing: 0;
+  line-height: 1.4;
+  /* color: #999; */
+}
+h1, h2 {
+/*          font: 400 87px/84px Abril Fatface;*/
+  color: #222;
+  font: 800 64px/64px 'open sans';
+  margin: 0 0 5px 0;
+  text-align: center;
+  text-transform: uppercase;
+}
+h1 span {
+  font: 400 60px/60px 'gentium book basic';
+  font-style: italic;
+  text-transform: none;
+}
+h1 a:hover {
+  text-decoration: none;
+}
+h2 {
+  font-size: 28px;
+}
+span.kern{
+  margin: 0 4px 0 -10px;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+a:hover {
+  color: inherit;
+  text-decoration: underline;
+}
+ul {
+  float: left;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+
+ul li {
+  background-position: center center !important;
+  background-size: cover !important;
+  display: inline-block;
+  float: left;
+  height: 500px;
+  width: 50%;
+}
+
+.next_prev {
+  padding: 10px;
+  text-align: center;
+}
+.btn {
+  display: inline-block;
+  height: 2.75em;
+  line-height: 2.7em;
+  margin: 10px;
+  padding: 0 1.5em 0 1.5em;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: 600;
+  border: solid 1px #dee0e3;
+}
+.btn:hover {
+  text-decoration: none;
+}
+.btn .fa {
+  vertical-align: middle;
+}
+.toc {
+  display: block;
+  font: 400 18px/18px 'gentium book basic';
+  font-style: italic;
+  margin: 40px 0;
+  text-align: center;
+}
+
+.date-cont {
+  display: -webkit-flex;
+  display: flex;
+}
+.date-cont > span {
+/*          border: solid black 1px;*/
+  width: 50px;
+}
+.l, .r {
+  -webkit-flex: 1;
+          flex: 1;
+}
+.spacer {
+  font-size: 9px;
+}
+.spacer.r {
+  border-left: solid #666 1px;
+}
+.title, .day {
+  margin: 4px 0;
+}
+.title {
+  font: 400 16px/20px 'gentium book basic';
+  font-style: italic;
+}
+.title.l {
+  text-align: right;
+}
+.title.r {
+  text-align: left;
+}
+.day {
+  color: #222;
+  font: 800 20px/20px 'open sans';
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.title-cont {
+  clear: both;
+  display: -webkit-flex;
+  display: flex;
+}
+.title-cont > span {
+/*          border: solid black 1px;*/
+  -webkit-flex: 1;
+          flex: 1;
+}
+.title-cont .l { text-align: center; }
+.title-cont .r { text-align: center; }
