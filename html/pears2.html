@@ -1,0 +1,159 @@
+{% extends "template.html" %}
+{% block head %}
+<style>
+.date-cont {
+  display: -webkit-flex;
+  display: flex;
+}
+.date-cont > span {
+/*          border: solid black 1px;*/
+  width: 125px;
+}
+.l, .r {
+  -webkit-flex: 1;
+          flex: 1;
+}
+.spacer {
+  font-size: 9px;
+}
+.spacer.r {
+  border-left: solid #666 1px;
+}
+.title, .day {
+  margin: 4px 0;
+}
+.title {
+  font: 400 16px/16px 'gentium book basic';
+  font-style: italic;
+}
+.title.l {
+  text-align: right;
+}
+.title.r {
+  text-align: left;
+}
+.day {
+  color: #222;
+  font: 800 64px/64px 'open sans';
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.title-cont {
+  clear: both;
+  display: -webkit-flex;
+  display: flex;
+  margin: 0 0 100px 0;
+}
+.title-cont > span {
+/*          border: solid black 1px;*/
+  -webkit-flex: 1;
+          flex: 1;
+}
+.title-cont .l { text-align: center; }
+.title-cont .r { text-align: center; }
+</style>
+{% endblock %}
+{% block page %}
+      <ul>
+        <li style="background: url('/uploads/as/red1.png')"></li>
+        <li style="background: url('/uploads/jb/red1.png')"></li>
+      </ul>
+      <div class="title-cont">
+        <span class="title l">Missus tulips &bull; February 14th</span>
+        <span class="title r">February 14th &bull; Heirmonyous</span>
+      </div>
+        
+      <!-- <div class="next_prev">
+        <a href="#" class="btn"><i class="fa fa-chevron-left"></i> prev</a>
+        <a href="#" class="btn">next <i class="fa fa-chevron-right"></i></a>
+      </div>
+
+      <a href="/toc/" class="toc"><i class="fa fa-list-ul"></i> table of contents</a> -->
+        
+      <h2><span class="kern">some other <br /></span>Pears <span class="kern">of</span> <span style="color:red">February</span></h2>
+      <br />
+      
+      
+      <section class="month">
+        <div class="date-cont">
+          <span class="title l"><a href="/pears/"><img src="/uploads/as/red1.png" /><br />Missus tulips</a></span>
+          <span class="day">14</span>
+          <span class="title r"><a href="/pears/"><img src="/uploads/jb/red1.png" /><br />Heirmonyous</a></span>
+        </div>
+        <div class="date-cont">
+          <span class="spacer l">&nbsp;</span>
+          <span class="spacer r">&nbsp;</span>
+        </div>
+        <div class="date-cont">
+          <span class="spacer l">&nbsp;</span>
+          <span class="spacer r">&nbsp;</span>
+        </div>
+        <div class="date-cont">
+          <span class="spacer l">&nbsp;</span>
+          <span class="spacer r">&nbsp;</span>
+        </div>
+        <div class="date-cont">
+          <span class="spacer l">&nbsp;</span>
+          <span class="spacer r">&nbsp;</span>
+        </div>
+        <div class="date-cont">
+          <span class="spacer l">&nbsp;</span>
+          <span class="spacer r">&nbsp;</span>
+        </div>
+        <div class="date-cont">
+          <span class="title l"><a href="/pears/"><img src="/uploads/as/red2.png" /><br />Gingerberries</a></span>
+          <span class="day">20</span>
+          <span class="title r"><a href="/pears/"><img src="/uploads/jb/red2.png" /><br />Nothing feels</a></span>
+        </div>
+        <div class="date-cont">
+          <span class="title l"><a href="/pears/"><img src="/uploads/as/red3.png" /><br />WZLX 87</a></span>
+          <span class="day">21</span>
+          <span class="title r">&nbsp;</span>
+        </div>
+        <div class="date-cont">
+          <span class="spacer l">&nbsp;</span>
+          <span class="spacer r">&nbsp;</span>
+        </div>
+        <div class="date-cont">
+          <span class="spacer l">&nbsp;</span>
+          <span class="spacer r">&nbsp;</span>
+        </div>
+        <div class="date-cont">
+          <span class="spacer l">&nbsp;</span>
+          <span class="spacer r">&nbsp;</span>
+        </div>
+        <div class="date-cont">
+          <span class="title l">&nbsp;</span>
+          <span class="day">25</span>
+          <span class="title r"><a href="/pears/"><img src="/uploads/jb/red3.png" /><br />Fall off (turn away)</a></span>
+        </div>
+        <div class="date-cont">
+          <span class="spacer l">&nbsp;</span>
+          <span class="spacer r">&nbsp;</span>
+        </div>
+        <div class="date-cont">
+          <span class="spacer l">&nbsp;</span>
+          <span class="spacer r">&nbsp;</span>
+        </div>
+        <div class="date-cont">
+          <span class="title l"><a href="/pears/"><img src="/uploads/as/red4.png" /><br />Joe Robbie Stadium</a></span>
+          <span class="day">28</span>
+          <span class="title r"><a href="/pears/"><img src="/uploads/jb/red4.jpg" /><br />ASVEILnak_99</a></span>
+        </div>
+      </section>
+      
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <h2 class="more">
+        <span class="kern">more months... </span><br /> 
+        <span style="color:red">February</span> <span style="color:lightgrey">&bull; March &bull;</span> <span style="color:lightgrey">April &bull;</span> <span style="color:lightgrey">May</span><br />
+        <span style="color:lightgrey">June &bull;</span> <span style="color:lightgrey">July &bull;</span> <span style="color:lightgrey">August &bull;</span> <span style="color:lightgrey">September</span><br />
+        <span style="color:lightgrey">October &bull;</span> <span style="color:lightgrey">November &bull;</span> <span style="color:lightgrey">December &bull;</span> <span style="color:lightgrey">January</span>
+      </h2>
+      
+{% endblock %}

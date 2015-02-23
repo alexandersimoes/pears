@@ -19,8 +19,12 @@ def index():
     return render_template('index.html')
 
 @app.route('/pears/')
-def pears():
+def pears2():
     return render_template('pears.html')
+
+@app.route('/pears2/')
+def pears():
+    return render_template('pears2.html')
 
 @app.route('/toc/')
 def toc():
