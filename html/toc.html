@@ -1,6 +1,8 @@
 {% extends "template.html" %}
-{% block page %}
 
+{% block title %}Table of Contents{% endblock %}
+
+{% block page %}
 {% for month, days in imgs.items() %}
 
 <h2 class="toc-title"><span style="color:red">{{ month }}</span></h2>

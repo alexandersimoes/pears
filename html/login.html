@@ -1,8 +1,6 @@
 {% extends "template.html" %}
 
-{% block head %}
-
-{% endblock %}
+{% block title %}Login{% endblock %}
 
 {% block page %}
 <div class="upload">
@@ -35,6 +33,12 @@
 <script>
 document.querySelector("button").addEventListener("click", function(){
   document.querySelector("form").submit();
+});
+
+document.querySelector("input[name='pw']").addEventListener("keypress", function(e){
+  if (e.which == 13) {
+    document.querySelector("form").submit();
+  }
 });
 </script>
 {% endblock %}

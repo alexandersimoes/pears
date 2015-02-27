@@ -8,7 +8,7 @@ from flask import Flask, render_template, request, redirect, url_for, abort, \
 from werkzeug import secure_filename
 from werkzeug.security import check_password_hash
 app = Flask(__name__, template_folder="html")
-app.config['DATABASE'] = "pears.db"
+app.config['DATABASE'] = os.path.join(os.path.dirname(__file__), "pears.db")
 app.config['DEBUG'] = True
 app.config['UPLOAD_FOLDER'] = os.path.join(os.path.dirname(__file__), 'uploads')
 
@@ -125,20 +125,6 @@ def toc():
             if not imgs[m_name][i["day"]-1]:
                 imgs[m_name][i["day"]-1] = {}
             imgs[m_name][i["day"]-1][initials] = i
-        
-        # as_imgs = query_db("SELECT * FROM img WHERE month=? and user=? ORDER BY day DESC", (m_id, "alexandersimoes@gmail.com",))
-        # for i in as_imgs:
-        #     imgs[i["day"]] = (i, None)
-        #
-        # jb_imgs = query_db("SELECT * FROM img WHERE month=? and user=? ORDER BY day DESC", (m_id, "jnoelbasil@gmail.com",))
-        # for i in jb_imgs:
-        #     if imgs[i["day"]]:
-        #         imgs[i["day"]][1] = i
-        #     else:
-        #         imgs[i["day"]] = (None, i)
-        
-        
-        
     return render_template('toc.html', imgs=imgs)
 
 @app.route('/photophoto/login/', methods=['GET', 'POST'])
@@ -148,9 +134,11 @@ def login():
         '''try to find user'''
         user = query_db("SELECT email, password FROM user WHERE email=?", [request.form["email"].lower()], one=True)
         if not user:
-            error = "Invalid username"
+            error = "Woopsie wrong username"
+            flash(error, "error")
         elif not check_password_hash(user["password"], request.form["pw"]):
-            error = "Invalid password"
+            error = "Woopsie wrong password"
+            flash(error, "error")
         else:
             session["logged_in"] = True
             session["user"] = user["email"]
