@@ -107,9 +107,43 @@ def home():
     
     return render_template('pears.html', imgs=pears)
 
-@app.route('/pears2/')
-def pears2():
-    return render_template('pears2.html')
+@app.route('/photophoto2/')
+def home2():
+    
+    as_imgs = query_db("SELECT * FROM img WHERE month=2 and user=? ORDER BY day DESC", ("alexandersimoes@gmail.com",))
+    jb_imgs = query_db("SELECT * FROM img WHERE month=2 and user=? ORDER BY day DESC", ("jnoelbasil@gmail.com",))
+    # raise Exception(list(izip_longest(as_imgs, jb_imgs)))
+    
+    pears = []
+    for pear in izip_longest(as_imgs, jb_imgs):
+        new_pear = []
+        for p in pear:
+            if p:
+                p = dict(p)
+                p['date'] = custom_strftime('%B {S}', dt(2015, p['month'], p['day']))
+            new_pear.append(p)
+        pears.append(new_pear)
+    
+    return render_template('pears2.html', imgs=pears)
+
+@app.route('/photophoto3/')
+def home3():
+    
+    as_imgs = query_db("SELECT * FROM img WHERE month=2 and user=? ORDER BY day DESC", ("alexandersimoes@gmail.com",))
+    jb_imgs = query_db("SELECT * FROM img WHERE month=2 and user=? ORDER BY day DESC", ("jnoelbasil@gmail.com",))
+    # raise Exception(list(izip_longest(as_imgs, jb_imgs)))
+    
+    pears = []
+    for pear in izip_longest(as_imgs, jb_imgs):
+        new_pear = []
+        for p in pear:
+            if p:
+                p = dict(p)
+                p['date'] = custom_strftime('%B {S}', dt(2015, p['month'], p['day']))
+            new_pear.append(p)
+        pears.append(new_pear)
+    
+    return render_template('pears3.html', imgs=pears)
 
 @app.route('/photophoto/toc/')
 def toc():
