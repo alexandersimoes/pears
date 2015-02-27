@@ -14,18 +14,33 @@
         <link rel="stylesheet" href="/static/css/pears.css">
         <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
         <link href='http://fonts.googleapis.com/css?family=Abril+Fatface|Open+Sans:300,400,600,700,800|Gentium+Book+Basic:400,400italic|Vollkorn:400italic,400' rel='stylesheet' type='text/css'>
-        
+        <link href='http://fonts.googleapis.com/css?family=PT+Sans:700|Merriweather:400,900|Playfair+Display:400,900,700italic|Oswald:700|PT+Mono' rel='stylesheet' type='text/css'>
         {% block head %}
         {% endblock %}
         
 
     </head>
     <body>
+      {% for category, message in get_flashed_messages(with_categories=true) %}
+      <div class="notify {{ category }}">
+        {{ message }}
+      </div>
+      {% endfor %}
       
-      <h1><a href="/pears/">Pears <span class="kern">of</span> Hue</a></h1>
+      <h1 class="title"><a href="{{ url_for('home') }}">Photo&nbsp;&nbsp;<span class="other">Photo</span></a></h1>
       
       {% block page %}
       {% endblock %}
+      
+      <nav>
+        <a href="{{ url_for('toc') }}"><i class="fa fa-list-ul"></i> table of contents</a> | 
+        <a href="{{ url_for('upload') }}" class="toc"><i class="fa fa-paper-plane-o"></i> upload</a> | 
+        {% if g.user %}
+        <a href="{{ url_for('logout') }}" class="toc"><i class="fa fa-sign-out"></i> log out</a>
+        {% else %}
+        <a href="{{ url_for('login') }}" class="toc"><i class="fa fa-bicycle"></i> log in</a>
+        {% endif %}
+      </nav>
 
       <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
       <script>

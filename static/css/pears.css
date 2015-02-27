@@ -11,7 +11,14 @@ body {
   line-height: 1.4;
   /* color: #999; */
 }
-h1, h2 {
+.notify {
+  background: black;
+  color: white;
+  font: 800 24px/24px 'open sans';
+  padding: 10px;
+  text-align: center;
+}
+h2 {
 /*          font: 400 87px/84px Abril Fatface;*/
   color: #222;
   font: 800 64px/64px 'open sans';
@@ -19,10 +26,32 @@ h1, h2 {
   text-align: center;
   text-transform: uppercase;
 }
+h1.title {
+/*  border-top: 1px solid #222;*/
+  color: #222;
+/*  font: 700 64px/64px 'open sans condensed';*/
+  font: italic 700 84px/84px 'playfair display';
+/*  margin: 35px 0 0px 0;*/
+  margin: 0;
+  text-align: center;
+/*  text-transform: uppercase;*/
+}
+/*h1.title a {
+  background: white;
+  padding: 0 20px;
+  position: relative;
+  top: -38px;
+}*/
 h1 span.kern, h2 span.kern {
   font: 400 60px/60px 'gentium book basic';
   font-style: italic;
   text-transform: none;
+}
+h1 span.other, h2 span.other {
+/*  font: 400 60px/60px 'Abril Fatface';
+  text-transform: none;*/
+  font-style: normal;
+  font-weight: 900;
 }
 h1 a:hover {
   text-decoration: none;
@@ -96,12 +125,13 @@ ul li {
 .btn .fa {
   vertical-align: middle;
 }
-.toc {
-  display: block;
-  font: 400 18px/18px 'gentium book basic';
-  font-style: italic;
+nav {
   margin: 40px 0;
   text-align: center;
+}
+nav a {
+  font: 400 18px/18px 'gentium book basic';
+  font-style: italic;
 }
 
 section.month img {
@@ -158,3 +188,150 @@ section.month img {
 }
 .title-cont .l { text-align: center; }
 .title-cont .r { text-align: center; }
+
+
+/*
+
+  toc
+
+*/
+
+.date-cont {
+  display: -webkit-flex;
+  display: flex;
+}
+.date-cont > span {
+/*          border: solid black 1px;*/
+  width: 125px;
+}
+.l, .r {
+  -webkit-flex: 1;
+          flex: 1;
+}
+.spacer {
+  font-size: 9px;
+}
+.spacer.r {
+  border-left: solid #666 1px;
+}
+.title, .day {
+  margin: 4px 0;
+}
+.title {
+  font: 400 16px/16px 'gentium book basic';
+  font-style: italic;
+}
+.title.l {
+  text-align: right;
+}
+.title.r {
+  text-align: left;
+}
+.day {
+  color: #222;
+  font: 800 64px/64px 'open sans';
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.title-cont {
+  clear: both;
+  display: -webkit-flex;
+  display: flex;
+  margin: 0 0 100px 0;
+}
+.title-cont > span {
+/*          border: solid black 1px;*/
+  -webkit-flex: 1;
+          flex: 1;
+}
+.title-cont .l { text-align: center; }
+.title-cont .r { text-align: center; }
+.toc-title {
+  margin: 20px 0;
+}
+
+
+/*
+
+  upload
+
+*/
+
+.upload {
+  margin: 20px 0;
+}
+.upload section {
+  display: -webkit-flex;
+  display: flex; 
+  margin: 30px 0;
+}
+.upload section > h2 {
+/*  border: solid blue 1px;*/
+  -webkit-flex: 1;
+          flex: 1;
+  text-align: right;
+  margin: 0 10px 0 0;
+}
+.upload section > div {
+/*  border: solid blue 1px;*/
+  -webkit-flex: 1;
+          flex: 1;
+  margin: 0 0 0 10px;
+}
+.upload section > div select {
+  font-size: 22px;
+  width: 100px;
+}
+.upload section > div input {
+  background-color: white;
+  border: none;
+  border-bottom: solid 3px black;
+  font: 400 20px 'open sans';
+  height: 30px;
+  display: block;
+  color: #333;
+  width: 400px;
+  appearance: none;
+  box-shadow: none;
+}
+.upload section > div input:focus{
+    outline: 0;
+}
+
+.upload section > div .dropzone { 
+  border: 2px dashed black; 
+  background: white; 
+  width: 400px;
+  min-height: 200px;
+}
+.upload section > div .dropzone img { 
+  width: 360px;
+}
+.upload section > div .dropzone.dz-drag-hover { 
+/*  border: 2px solid black;*/
+  background: #eee; 
+}
+.upload section > div .dropzone .dz-message { 
+  text-align: center;
+  margin: 60px 0;
+}
+.upload section > div .dropzone .dz-message.wimg { 
+  margin: 0;
+}
+
+.upload button {
+  border: solid 3px black;
+  background: white;
+  color: black;
+  font: 800 20px 'open sans';
+  padding: 10px;
+}
+.upload button:hover {
+  background: #eee; 
+}
+.upload .data a {
+  color: black;
+  font: 800 16px 'open sans';
+  padding: 10px; 
+}

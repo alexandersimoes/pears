@@ -1,52 +1,26 @@
 {% extends "template.html" %}
 {% block page %}
+      {% if imgs %}
+      {% for pear in imgs %}
       <ul>
-        <li style="background: url('/uploads/as/red1.jpg')"></li>
-        <li style="background: url('/uploads/jb/red1.jpg')"></li>
+        <li style="background: url('/uploads/as/{{ pear[0].slug }}')"></li>
+        <li style="background: url('/uploads/jb/{{ pear[1].slug }}')"></li>
       </ul>
       <div class="title-cont">
-        <span class="title l">Missus tulips &bull; February 14th</span>
-        <span class="title r">February 14th &bull; Heirmonyous</span>
-      </div>
-        
-      <!-- <div class="next_prev">
-        <a href="#" class="btn"><i class="fa fa-chevron-left"></i> prev</a>
-        <a href="#" class="btn">next <i class="fa fa-chevron-right"></i></a>
-      </div>
-
-      <a href="/toc/" class="toc"><i class="fa fa-list-ul"></i> table of contents</a> -->
-        
-      <h2 class="more"><span class="kern">some other <br /></span>Pears <span class="kern">of</span> <span style="color:red">February</span></h2>
-      
-      <!-- <hr /> -->
-      
-      <ul>
-        <li style="background: url('/uploads/as/red2.jpg')"></li>
-        <li style="background: url('/uploads/jb/red2.jpg')"></li>
-      </ul>
-      <div class="title-cont">
-        <span class="title l">Missus tulips &bull; February 14th</span>
-        <span class="title r">February 14th &bull; Heirmonyous</span>
+        <span class="title l">{% if pear[0] %}{{ pear[0].title }} &bull; {{ pear[0].date }}{% if pear[0].user == g.user %} &bull; <a href="{{ url_for('upload', img=pear[0].id) }}">edit <i class="fa fa-edit"></i></a>{% endif %}{% else %}&nbsp;{% endif %}</span>
+        <span class="title r">{% if pear[1] %}{{ pear[1].date }} &bull; {{ pear[1].title }}{% if pear[1].user == g.user %} &bull; <a href="{{ url_for('upload', img=pear[1].id) }}">edit <i class="fa fa-edit"></i></a>{% endif %}{% else %}&nbsp;{% endif %}</span>
       </div>
       
-      <ul>
-        <li style="background: url('/uploads/as/red3.jpg')"></li>
-        <li style="background: url('/uploads/jb/red3.jpg')"></li>
-      </ul>
-      <div class="title-cont">
-        <span class="title l">Missus tulips &bull; February 14th</span>
-        <span class="title r">February 14th &bull; Heirmonyous</span>
-      </div>
-      
-      <ul>
-        <li style="background: url('/uploads/as/red4.jpg')"></li>
-        <li style="background: url('/uploads/jb/red4.jpg')"></li>
-
-      <div class="title-cont">
-        <span class="title l">Missus tulips &bull; February 14th</span>
-        <span class="title r">February 14th &bull; Heirmonyous</span>
-      </div>
-      
+      {% if loop.first %}
+      <h2 class="more"><span class="kern">some other <br /></span>Photos <span class="kern">of</span> <span style="color:red">February</span></h2>
+      {% endif %}
+      {% endfor %}
+      {% else %}
+      <br />
+      <br />
+      <h2 class="more">No images uploaded yet :-(</h2>
+      {% endif %}
+            
       <h2 class="more">
         <span class="kern">more months... </span><br /> 
         <span style="color:red">February</span> <span style="color:lightgrey">&bull; March &bull;</span> <span style="color:lightgrey">April &bull;</span> <span style="color:lightgrey">May</span><br />

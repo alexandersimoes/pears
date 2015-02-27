@@ -1,0 +1,184 @@
+{% extends "template.html" %}
+
+{% block head %}
+<script src="/static/js/dropzone.js"></script>
+<link rel="stylesheet" href="/static/css/dropzone.css">
+<style>
+.dropzone .dz-preview {
+  margin: 0;
+}
+.dropzone .dz-preview .dz-image {
+ border-radius: 0px;
+ height: inherit;
+ overflow: none;
+ width: inherit;
+}
+</style>
+{% endblock %}
+
+{% block page %}
+<div class="upload">
+  
+  <section>
+    <h2>Month</h2>
+    <div class="data">
+      <select name="month">
+        <option value="2" {% if img and img.month == 2 %}selected="selected"{% endif %}>February</option>
+        <option value="3" {% if img and img.month == 3 %}selected="selected"{% endif %}>March</option>
+      </select>
+    </div>
+  </section>
+  
+  <section>
+    <h2>Day</h2>
+    <div class="data">
+      <select name="day">
+        <option value="1" {% if img and img.day == 1 %}selected="selected"{% endif %}>1</option>
+        <option value="2" {% if img and img.day == 2 %}selected="selected"{% endif %}>2</option>
+        <option value="3" {% if img and img.day == 3 %}selected="selected"{% endif %}>3</option>
+        <option value="4" {% if img and img.day == 4 %}selected="selected"{% endif %}>4</option>
+        <option value="5" {% if img and img.day == 5 %}selected="selected"{% endif %}>5</option>
+        <option value="6" {% if img and img.day == 6 %}selected="selected"{% endif %}>6</option>
+        <option value="7" {% if img and img.day == 7 %}selected="selected"{% endif %}>7</option>
+        <option value="8" {% if img and img.day == 8 %}selected="selected"{% endif %}>8</option>
+        <option value="9" {% if img and img.day == 9 %}selected="selected"{% endif %}>9</option>
+        <option value="20" {% if img and img.day == 20 %}selected="selected"{% endif %}>20</option>
+        <option value="21" {% if img and img.day == 21 %}selected="selected"{% endif %}>21</option>
+        <option value="22" {% if img and img.day == 22 %}selected="selected"{% endif %}>22</option>
+        <option value="23" {% if img and img.day == 23 %}selected="selected"{% endif %}>23</option>
+        <option value="24" {% if img and img.day == 24 %}selected="selected"{% endif %}>24</option>
+        <option value="25" {% if img and img.day == 25 %}selected="selected"{% endif %}>25</option>
+        <option value="26" {% if img and img.day == 26 %}selected="selected"{% endif %}>26</option>
+        <option value="27" {% if img and img.day == 27 %}selected="selected"{% endif %}>27</option>
+        <option value="28" {% if img and img.day == 28 %}selected="selected"{% endif %}>28</option>
+        <option value="29" {% if img and img.day == 29 %}selected="selected"{% endif %}>29</option>
+        <option value="30" {% if img and img.day == 30 %}selected="selected"{% endif %}>30</option>
+        <option value="31" {% if img and img.day == 31 %}selected="selected"{% endif %}>31</option>
+      </select>
+    </div>
+  </section>
+  
+  <section>
+    <h2>Title</h2>
+    <div class="data">
+      <input type="text" name="title" placehold="" value="{% if img %}{{ img.title }}{% endif %}"></input>
+    </div>
+  </section>
+  
+  <section>
+    <h2>Image</h2>
+    <div class="data">
+      <form action="{{ url_for('upload') }}" class="dropzone">
+        {% if img %}<div class="dz-default dz-message wimg"><img src="/uploads/{% if 'alex' in img.user %}as{% else %}jb{% endif %}/{{ img.slug }}" /></div>{% endif %}
+      </form>
+    </div>
+  </section>
+  
+  <section>
+    <h2>&nbsp;</h2>
+    <div class="data">
+      <button>{% if img %}Update{% else %}Upload{% endif %} <i class="fa fa-paper-plane-o"></i></button>
+      <span class="controls" {% if not img %}style="display: none"{% endif %}>
+        <a href="{{ url_for('home') }}">View <i class="fa fa-image"></i></a>
+        <a class="delete" href="{% if img %}{{ url_for('upload', img=img.id, delete=True) }}{% else %}#{% endif %}" style="color: red">Delete <i class="fa fa-trash"></i></a>
+      </span>
+      {% if img %}<input type="hidden" name="id" value="{{ img.id }}"></input>{% endif %}
+    </div>
+  </section>
+  
+</div>
+
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script>
+// Dropzone
+Dropzone.autoDiscover = false;
+var update = {% if img %}true{% else %}false{% endif %};
+
+var dropzone = new Dropzone('.dropzone', {
+  autoProcessQueue: false,
+  dictDefaultMessage: "Drop image here to upload.",
+  // previewTemplate: document.querySelector('#preview-template').innerHTML,
+  parallelUploads: 2,
+  thumbnailHeight: 160,
+  thumbnailWidth: 360,
+  maxFilesize: 4,
+  maxFiles: 1,
+  init: function() {
+      this.hiddenFileInput.removeAttribute('multiple');
+      
+      this.on("maxfilesexceeded", function(file) {
+                  this.removeAllFiles();
+                  this.addFile(file);
+            });
+      
+  },
+  filesizeBase: 1000,
+  success: function(file, resp) {
+    update = true;
+    if(d3.select("input[name='id']").empty()){
+      d3.select(".data").insert("input", "button")
+        .attr("type", "hidden")
+        .attr("name", "id")
+        .attr("value", resp['id'])
+    }
+    else {
+      d3.select("input[name='id']").attr("value", resp['id'])
+    }
+    if(d3.select(".notify").empty()){
+      d3.select("body").insert("div", ".title")
+        .attr("class", "notify")
+        .text("Whoah new image eh?")
+    }
+    d3.select(".delete")
+      .attr("href", "/photophoto/upload/"+resp['id']+"/delete/")
+  },
+  thumbnail: function(file, dataUrl) {
+    if (file.previewElement) {
+      file.previewElement.classList.remove("dz-file-preview");
+      var images = file.previewElement.querySelectorAll("[data-dz-thumbnail]");
+      for (var i = 0; i < images.length; i++) {
+        var thumbnailElement = images[i];
+        thumbnailElement.alt = file.name;
+        thumbnailElement.src = dataUrl;
+      }
+      setTimeout(function() { file.previewElement.classList.add("dz-image-preview"); }, 1);
+    }
+  }
+
+});
+
+dropzone.on("sending", function(file, xhr, formData) {
+  // Will send the filesize along with the file as POST data.
+  formData.append("month", document.querySelector("select[name='month']").value);
+  formData.append("day", document.querySelector("select[name='day']").value);
+  formData.append("title", document.querySelector("input[name='title']").value);
+});
+
+dropzone.on('complete', function(file) {
+  file.previewElement.classList.add('dz-complete');
+  document.querySelector(".controls").style.display = "inline";
+});
+
+document.querySelector("button").addEventListener("click", function(){
+  if(!dropzone.getQueuedFiles().length && update){
+    var id = document.querySelector("input[name='id']").value;
+    var month = document.querySelector("select[name='month']").value;
+    var day = document.querySelector("select[name='day']").value;
+    var title = document.querySelector("input[name='title']").value;
+    d3.xhr("{{ url_for('upload') }}",function(error, data) {
+      data = JSON.parse(data.response);
+      if(d3.select(".notify").empty()){
+        d3.select("body").insert("div", ".title")
+          .attr("class", "notify")
+          .text("Yaaaaaaa updated the shit out of that info")
+      }
+    })
+    .header("Content-type", "application/x-www-form-urlencoded")
+    .send("POST", "id="+id+"&month="+month+"&day="+day+"&title="+title);
+  }
+  else {
+    dropzone.processQueue();
+  }
+});
+</script>
+{% endblock %}

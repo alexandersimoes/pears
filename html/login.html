@@ -1,0 +1,40 @@
+{% extends "template.html" %}
+
+{% block head %}
+
+{% endblock %}
+
+{% block page %}
+<div class="upload">
+  
+  <form action="{{ url_for('login') }}" method="post" class="login">  
+    <section>
+      <h2>Email</h2>
+      <div class="data">
+        <input type="text" name="email" placehold="" value="" autofocus></input>
+      </div>
+    </section>
+  
+    <section>
+      <h2>Netflix PW</h2>
+      <div class="data">
+        <input type="password" name="pw" placehold="" value=""></input>
+      </div>
+    </section>
+  </form>
+  
+  <section>
+    <h2>&nbsp;</h2>
+    <div class="data">
+      <button>Login <i class="fa fa-bicycle"></i></button>
+    </div>
+  </section>
+  
+</div>
+
+<script>
+document.querySelector("button").addEventListener("click", function(){
+  document.querySelector("form").submit();
+});
+</script>
+{% endblock %}
