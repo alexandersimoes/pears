@@ -35,27 +35,9 @@
     <h2>Day</h2>
     <div class="data">
       <select name="day">
-        <option value="1" {% if img and img.day == 1 %}selected="selected"{% endif %}>1</option>
-        <option value="2" {% if img and img.day == 2 %}selected="selected"{% endif %}>2</option>
-        <option value="3" {% if img and img.day == 3 %}selected="selected"{% endif %}>3</option>
-        <option value="4" {% if img and img.day == 4 %}selected="selected"{% endif %}>4</option>
-        <option value="5" {% if img and img.day == 5 %}selected="selected"{% endif %}>5</option>
-        <option value="6" {% if img and img.day == 6 %}selected="selected"{% endif %}>6</option>
-        <option value="7" {% if img and img.day == 7 %}selected="selected"{% endif %}>7</option>
-        <option value="8" {% if img and img.day == 8 %}selected="selected"{% endif %}>8</option>
-        <option value="9" {% if img and img.day == 9 %}selected="selected"{% endif %}>9</option>
-        <option value="20" {% if img and img.day == 20 %}selected="selected"{% endif %}>20</option>
-        <option value="21" {% if img and img.day == 21 %}selected="selected"{% endif %}>21</option>
-        <option value="22" {% if img and img.day == 22 %}selected="selected"{% endif %}>22</option>
-        <option value="23" {% if img and img.day == 23 %}selected="selected"{% endif %}>23</option>
-        <option value="24" {% if img and img.day == 24 %}selected="selected"{% endif %}>24</option>
-        <option value="25" {% if img and img.day == 25 %}selected="selected"{% endif %}>25</option>
-        <option value="26" {% if img and img.day == 26 %}selected="selected"{% endif %}>26</option>
-        <option value="27" {% if img and img.day == 27 %}selected="selected"{% endif %}>27</option>
-        <option value="28" {% if img and img.day == 28 %}selected="selected"{% endif %}>28</option>
-        <option value="29" {% if img and img.day == 29 %}selected="selected"{% endif %}>29</option>
-        <option value="30" {% if img and img.day == 30 %}selected="selected"{% endif %}>30</option>
-        <option value="31" {% if img and img.day == 31 %}selected="selected"{% endif %}>31</option>
+        {% for day in days_in_month %}
+        <option value="{{ day }}" {% if img and img.day == day %}selected="selected"{% elif today == day %}selected="selected"{% endif %}>{{ day }}</option>
+        {% endfor %}
       </select>
     </div>
   </section>

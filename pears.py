@@ -201,9 +201,14 @@ def upload(img=None, delete=False):
         
             img_id = insert_db("img", fields=('day', 'month', 'user', 'title', 'slug'), args=(day, month, session.get("user"), title, filename))
             return jsonify(id=img_id, day=day, month=month, title=title)
+    first_day, days_in_month = monthrange(2015, dt.now().month)
+    days_in_month = range(1, days_in_month+1)
+    today = dt.now().day
     if img:
         img = query_db("SELECT * FROM img WHERE id=?", (img,), one=True)
-    return render_template('upload.html', img=img)
+        first_day, days_in_month = monthrange(2015, img["month"])
+        days_in_month = range(1, days_in_month+1)
+    return render_template('upload.html', img=img, days_in_month=days_in_month, today=today)
 
 '''
 
