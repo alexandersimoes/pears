@@ -2,13 +2,31 @@
 
 {% block head %}
 <style>
+body {
+  background: black;
+}
+h1.title a {
+  color: #333;
+}
 ul > li {
+/*  border: solid green 1px;*/
   background: black;
   height: 500px;
   text-align: center;
+  position: relative;
 }
 li > img {
-  height: 100%;
+  margin: auto;
+  max-height: 100%;
+  max-width: 100%;
+  position: absolute;
+  left: 0; right: 0; top: 0; bottom: 0;
+}
+h2 {
+  color: #666;
+}
+h2.more span {
+  color: #666;
 }
 </style>
 {% endblock %}
@@ -37,9 +55,22 @@ li > img {
             
       <h2 class="more">
         <span class="kern">more months... </span><br /> 
-        <span style="color:red">February</span> <span style="color:lightgrey">&bull; March &bull;</span> <span style="color:lightgrey">April &bull;</span> <span style="color:lightgrey">May</span><br />
-        <span style="color:lightgrey">June &bull;</span> <span style="color:lightgrey">July &bull;</span> <span style="color:lightgrey">August &bull;</span> <span style="color:lightgrey">September</span><br />
-        <span style="color:lightgrey">October &bull;</span> <span style="color:lightgrey">November &bull;</span> <span style="color:lightgrey">December &bull;</span> <span style="color:lightgrey">January</span>
+        <span style="color:red">February</span> <span>&bull; March &bull;</span> <span>April &bull;</span> <span>May</span><br />
+        <span>June &bull;</span> <span>July &bull;</span> <span>August &bull;</span> <span>September</span><br />
+        <span>October &bull;</span> <span>November &bull;</span> <span>December &bull;</span> <span>January</span>
       </h2>
       
+<!-- <script src="http://d3js.org/d3.v3.min.js"></script> -->
+<script>
+// var imgs = document.querySelectorAll("img");
+// for(var i = 0; i < imgs.length; i++){
+//   var w = imgs[i].naturalWidth, h = imgs[i].naturalHeight;
+//   if(w > h){
+//     imgs[i].style.width = "500px"
+//   }
+//   else {
+//     imgs[i].style.height = "500px"
+//   }
+// }
+</script> 
 {% endblock %}
