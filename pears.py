@@ -91,8 +91,8 @@ def index():
 @app.route('/photophoto/')
 def home():
     
-    as_imgs = query_db("SELECT * FROM img WHERE month=2 and user=? ORDER BY day DESC", ("alexandersimoes@gmail.com",))
-    jb_imgs = query_db("SELECT * FROM img WHERE month=2 and user=? ORDER BY day DESC", ("jnoelbasil@gmail.com",))
+    as_imgs = query_db("SELECT * FROM img WHERE month in (2, 3) and user=? ORDER BY month DESC, day DESC", ("alexandersimoes@gmail.com",))
+    jb_imgs = query_db("SELECT * FROM img WHERE month in (2, 3) and user=? ORDER BY month DESC, day DESC", ("jnoelbasil@gmail.com",))
     # raise Exception(list(izip_longest(as_imgs, jb_imgs)))
     
     pears = []
@@ -126,25 +126,6 @@ def home2():
     
     return render_template('pears2.html', imgs=pears)
 
-@app.route('/photophoto3/')
-def home3():
-    
-    as_imgs = query_db("SELECT * FROM img WHERE month=2 and user=? ORDER BY day DESC", ("alexandersimoes@gmail.com",))
-    jb_imgs = query_db("SELECT * FROM img WHERE month=2 and user=? ORDER BY day DESC", ("jnoelbasil@gmail.com",))
-    # raise Exception(list(izip_longest(as_imgs, jb_imgs)))
-    
-    pears = []
-    for pear in izip_longest(as_imgs, jb_imgs):
-        new_pear = []
-        for p in pear:
-            if p:
-                p = dict(p)
-                p['date'] = custom_strftime('%B {S}', dt(2015, p['month'], p['day']))
-            new_pear.append(p)
-        pears.append(new_pear)
-    
-    return render_template('pears3.html', imgs=pears)
-
 @app.route('/photophoto/toc/')
 def toc():
     months = [(2, "February"),]
@@ -176,7 +157,7 @@ def login():
         else:
             session["logged_in"] = True
             session["user"] = user["email"]
-            flash("OH HELL YA you in now biatch", "success")
+            flash("You're so logged in right now", "success")
             return redirect(url_for("home"))
     return render_template("login.html", error=error)
 
@@ -238,11 +219,12 @@ def upload(img=None, delete=False):
     first_day, days_in_month = monthrange(2015, dt.now().month)
     days_in_month = range(1, days_in_month+1)
     today = dt.now().day
+    this_month = dt.now().month
     if img:
         img = query_db("SELECT * FROM img WHERE id=?", (img,), one=True)
         first_day, days_in_month = monthrange(2015, img["month"])
         days_in_month = range(1, days_in_month+1)
-    return render_template('upload.html', img=img, days_in_month=days_in_month, today=today)
+    return render_template('upload.html', img=img, days_in_month=days_in_month, today=today, this_month=this_month)
 
 '''
 

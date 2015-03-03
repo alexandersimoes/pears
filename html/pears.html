@@ -3,8 +3,8 @@
       {% if imgs %}
       {% for pear in imgs %}
       <ul>
-        <li style="background: url('/uploads/as/{{ pear[0].slug }}')"></li>
-        <li style="background: url('/uploads/jb/{{ pear[1].slug }}')"></li>
+        <li>{% if pear[0] %}<img src="/uploads/as/{{ pear[0].slug }}" />{% else %}&nbsp;{% endif %}</li>
+        <li>{% if pear[1] %}<img src="/uploads/jb/{{ pear[1].slug }}" />{% else %}&nbsp;{% endif %}</li>
       </ul>
       <div class="title-cont">
         <span class="title l">{% if pear[0] %}{{ pear[0].title }} &bull; {{ pear[0].date }}{% if pear[0].user == g.user %} &bull; <a href="{{ url_for('upload', img=pear[0].id) }}">edit <i class="fa fa-edit"></i></a>{% endif %}{% else %}&nbsp;{% endif %}</span>
@@ -20,12 +20,12 @@
       <br />
       <h2 class="more">No images uploaded yet :-(</h2>
       {% endif %}
-            
+      
       <h2 class="more">
         <span class="kern">more months... </span><br /> 
-        <span style="color:red">February</span> <span style="color:lightgrey">&bull; March &bull;</span> <span style="color:lightgrey">April &bull;</span> <span style="color:lightgrey">May</span><br />
-        <span style="color:lightgrey">June &bull;</span> <span style="color:lightgrey">July &bull;</span> <span style="color:lightgrey">August &bull;</span> <span style="color:lightgrey">September</span><br />
-        <span style="color:lightgrey">October &bull;</span> <span style="color:lightgrey">November &bull;</span> <span style="color:lightgrey">December &bull;</span> <span style="color:lightgrey">January</span>
+        <span style="color:red">February</span> <span>&bull; March &bull;</span> <span>April &bull;</span> <span>May</span><br />
+        <span>June &bull;</span> <span>July &bull;</span> <span>August &bull;</span> <span>September</span><br />
+        <span>October &bull;</span> <span>November &bull;</span> <span>December &bull;</span> <span>January</span>
       </h2>
       
 {% endblock %}

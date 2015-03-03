@@ -25,8 +25,8 @@
     <h2>Month</h2>
     <div class="data">
       <select name="month">
-        <option value="2" {% if img and img.month == 2 %}selected="selected"{% endif %}>February</option>
-        <option value="3" {% if img and img.month == 3 %}selected="selected"{% endif %}>March</option>
+        <option value="2" {% if img and img.month == 2 %}selected="selected"{% elif this_month == 2 %}selected="selected"{% endif %}>February</option>
+        <option value="3" {% if img and img.month == 3 %}selected="selected"{% elif this_month == 3 %}selected="selected"{% endif %}>March</option>
       </select>
     </div>
   </section>
@@ -98,6 +98,9 @@ var dropzone = new Dropzone('.dropzone', {
   },
   filesizeBase: 1000,
   success: function(file, resp) {
+    if(!update){
+      window.location = "/photophoto/";
+    }
     update = true;
     if(d3.select("input[name='id']").empty()){
       d3.select(".data").insert("input", "button")
@@ -154,7 +157,10 @@ document.querySelector("button").addEventListener("click", function(){
       if(d3.select(".notify").empty()){
         d3.select("body").insert("div", ".title")
           .attr("class", "notify")
-          .text("Yaaaaaaa updated the shit out of that info")
+          .text("Totally updated")
+          .style("background", "#ddd")
+          .transition().duration(1000).delay(0).style("background", "black")
+          .transition().delay(5000).remove();
       }
     })
     .header("Content-type", "application/x-www-form-urlencoded")
