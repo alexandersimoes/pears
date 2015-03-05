@@ -12,7 +12,7 @@
       </div>
       
       {% if loop.first %}
-      <h2 class="more"><span class="kern">some other <br /></span>Photos <span class="kern">of</span> <span style="color:red">February</span></h2>
+      <h2 class="more"><span class="kern">some other <br /></span>Photos <span class="kern">of</span> <span style="color:{{ month.color }}">{{ month.name }}</span></h2>
       {% endif %}
       {% endfor %}
       {% else %}
@@ -23,7 +23,7 @@
       
       <h2 class="more">
         <span class="kern">more months... </span><br /> 
-        <span style="color:red">February</span> <span>&bull; March &bull;</span> <span>April &bull;</span> <span>May</span><br />
+        <a href="{{ url_for('home', month='february')}}" style="color:red">February</a> &bull; <a href="{{ url_for('home', month='march')}}" style="color:#ffd530">March</a> &bull; <span>April &bull;</span> <span>May</span><br />
         <span>June &bull;</span> <span>July &bull;</span> <span>August &bull;</span> <span>September</span><br />
         <span>October &bull;</span> <span>November &bull;</span> <span>December &bull;</span> <span>January</span>
       </h2>

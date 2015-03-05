@@ -89,10 +89,15 @@ def index():
     return render_template('index.html')
 
 @app.route('/photophoto/')
-def home():
+@app.route('/photophoto/<month>/')
+def home(month=dt.now().strftime("%B")):
+    month = month.capitalize()
+    month_num = dt.strptime(month,"%B").month
     
-    as_imgs = query_db("SELECT * FROM img WHERE month in (2, 3) and user=? ORDER BY month DESC, day DESC", ("alexandersimoes@gmail.com",))
-    jb_imgs = query_db("SELECT * FROM img WHERE month in (2, 3) and user=? ORDER BY month DESC, day DESC", ("jnoelbasil@gmail.com",))
+    month_color = {2: "red", 3:"#ffd530"}
+    
+    as_imgs = query_db("SELECT * FROM img WHERE month in (?) and user=? ORDER BY month DESC, day DESC", (month_num, "alexandersimoes@gmail.com",))
+    jb_imgs = query_db("SELECT * FROM img WHERE month in (?) and user=? ORDER BY month DESC, day DESC", (month_num, "jnoelbasil@gmail.com",))
     # raise Exception(list(izip_longest(as_imgs, jb_imgs)))
     
     pears = []
@@ -105,7 +110,7 @@ def home():
             new_pear.append(p)
         pears.append(new_pear)
     
-    return render_template('pears.html', imgs=pears)
+    return render_template('pears.html', imgs=pears, month={"name":month, "color":month_color[month_num]})
 
 @app.route('/photophoto2/')
 def home2():
@@ -187,7 +192,7 @@ def upload(img=None, delete=False):
                 if os.path.isfile(old_img_path):
                     os.remove(old_img_path)
             query_db('DELETE FROM img WHERE id=?', (img,), update=True)
-            flash('so sad, you deleted a perfectly good image')
+            flash('so sad, you deleted an image')
         return redirect(url_for("home"))
     if request.method == 'POST':
         file = request.files.get('file')
