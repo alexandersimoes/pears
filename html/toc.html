@@ -11,9 +11,9 @@
   
   {% if d %}
   <div class="date-cont">
-    <span class="title l">{% if d.as %}<a href="/pears/"><img src="/uploads/as/{{ d.as.slug }}" /><br />{{ d.as.title }}</a>{% else %}&nbsp;{% endif %}</span>
+    <span class="title l">{% if d.as %}<a href="{{ url_for('home', month=month|lower) }}"><img src="/uploads/as/{{ d.as.slug }}" /><br />{{ d.as.title }}</a>{% else %}&nbsp;{% endif %}</span>
     <span class="day">{{ loop.index + 1 }}</span>
-    <span class="title r">{% if d.jb %}<a href="/pears/"><img src="/uploads/jb/{{ d.jb.slug }}" /><br />{{ d.jb.title }}</a>{% else %}&nbsp;{% endif %}</span>
+    <span class="title r">{% if d.jb %}<a href="{{ url_for('home', month=month|lower) }}"><img src="/uploads/jb/{{ d.jb.slug }}" /><br />{{ d.jb.title }}</a>{% else %}&nbsp;{% endif %}</span>
   </div>
   {% else %}
   <div class="date-cont">
