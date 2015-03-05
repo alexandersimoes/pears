@@ -133,18 +133,24 @@ def home2():
 
 @app.route('/photophoto/toc/')
 def toc():
-    months = [(2, "February"),]
+    months = [(2, "February", "red"),(3, "March", "#ffd530"),]
     imgs = {}
-    for m_id, m_name in months:
+    for m_id, m_name, m_color in months:
         first_day, days_in_month = monthrange(2015, m_id)
-        imgs[m_name] = [None] * (days_in_month+1)
+        if m_id == dt.now().month:
+            days_in_month = dt.now().day+1
+        else:
+            days_in_month = days_in_month+1
+        imgs[m_name] = {"color":m_color, "imgs":[None] * days_in_month}
         
         month_imgs = query_db("SELECT * FROM img WHERE month=? ORDER BY day DESC", (m_id,))
         for i in month_imgs:
             initials = "as" if "alex" in i["user"] else "jb"
-            if not imgs[m_name][i["day"]-1]:
-                imgs[m_name][i["day"]-1] = {}
-            imgs[m_name][i["day"]-1][initials] = i
+            if len(imgs[m_name]["imgs"]) < i["day"]-1:
+                continue
+            if not imgs[m_name]["imgs"][i["day"]-1]:
+                imgs[m_name]["imgs"][i["day"]-1] = {}
+            imgs[m_name]["imgs"][i["day"]-1][initials] = i
     return render_template('toc.html', imgs=imgs)
 
 @app.route('/photophoto/login/', methods=['GET', 'POST'])
@@ -174,7 +180,7 @@ def logout():
     return redirect(url_for("home"))
 
 def allowed_file(filename):
-    return '.' in filename and filename.rsplit('.', 1)[1] in ("jpg", "jpeg", "png")
+    return '.' in filename and filename.rsplit('.', 1)[1] in ("JPG", "jpg", "jpeg", "png")
 
 @app.route('/photophoto/upload/', methods=['GET', 'POST'])
 @app.route('/photophoto/upload/<int:img>/delete/', defaults={'delete': True}, methods=['GET', 'POST'])

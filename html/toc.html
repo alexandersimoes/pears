@@ -3,17 +3,17 @@
 {% block title %}Table of Contents{% endblock %}
 
 {% block page %}
-{% for month, days in imgs.items() %}
+{% for month, month_data in imgs.items() %}
 
-<h2 class="toc-title"><span style="color:red">{{ month }}</span></h2>
+<h2 class="toc-title"><span style="color:{{ month_data.color }}">{{ month }}</span></h2>
 <section class="month">
-  {% for d in days %}
+  {% for d in month_data.imgs %}
   
   {% if d %}
   <div class="date-cont">
     <span class="title l">{% if d.as %}<a href="/pears/"><img src="/uploads/as/{{ d.as.slug }}" /><br />{{ d.as.title }}</a>{% else %}&nbsp;{% endif %}</span>
     <span class="day">{{ loop.index + 1 }}</span>
-    <span class="title r">{% if d.jb %}<a href="/pears/"><img src="/uploads/as/{{ d.jb.slug }}" /><br />{{ d.jb.title }}</a>{% else %}&nbsp;{% endif %}</span>
+    <span class="title r">{% if d.jb %}<a href="/pears/"><img src="/uploads/jb/{{ d.jb.slug }}" /><br />{{ d.jb.title }}</a>{% else %}&nbsp;{% endif %}</span>
   </div>
   {% else %}
   <div class="date-cont">
@@ -34,9 +34,9 @@
 <br />
 <h2 class="more">
   <span class="kern">more months... </span><br /> 
-  <span style="color:red">February</span> <span style="color:lightgrey">&bull; March &bull;</span> <span style="color:lightgrey">April &bull;</span> <span style="color:lightgrey">May</span><br />
-  <span style="color:lightgrey">June &bull;</span> <span style="color:lightgrey">July &bull;</span> <span style="color:lightgrey">August &bull;</span> <span style="color:lightgrey">September</span><br />
-  <span style="color:lightgrey">October &bull;</span> <span style="color:lightgrey">November &bull;</span> <span style="color:lightgrey">December &bull;</span> <span style="color:lightgrey">January</span>
+  <a href="{{ url_for('home', month='february')}}" style="color:red">February</a> &bull; <a href="{{ url_for('home', month='march')}}" style="color:#ffd530">March</a> &bull; <span>April &bull;</span> <span>May</span><br />
+  <span>June &bull;</span> <span>July &bull;</span> <span>August &bull;</span> <span>September</span><br />
+  <span>October &bull;</span> <span>November &bull;</span> <span>December &bull;</span> <span>January</span>
 </h2>
 
 

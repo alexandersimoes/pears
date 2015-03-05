@@ -246,7 +246,7 @@ section.month img {
   text-align: left;
 }
 .day {
-  color: #222;
+  color: #666;
   font: 800 64px/64px 'open sans';
   text-align: center;
   text-transform: uppercase;
