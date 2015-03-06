@@ -167,6 +167,18 @@ def logout():
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1] in ("JPG", "jpg", "jpeg", "png")
 
+def unique_filename(filename):
+    if query_db("SELECT * FROM img WHERE slug=?", (filename,), one=True) is None:
+        return filename
+    version = 2
+    while True:
+        f_name, f_ext = filename.rsplit('.', 1)
+        new_filename = "{}{}.{}".format(f_name, version, f_ext)
+        if query_db("SELECT * FROM img WHERE slug=?", (new_filename,), one=True) is None:
+            break
+        version += 1
+    return new_filename
+
 @app.route('/photophoto/upload/', methods=['GET', 'POST'])
 @app.route('/photophoto/upload/<int:img>/delete/', defaults={'delete': True}, methods=['GET', 'POST'])
 @app.route('/photophoto/upload/<int:img>/', defaults={'delete': False}, methods=['GET', 'POST'])
@@ -200,15 +212,16 @@ def upload(img=None, delete=False):
             return jsonify(id=id, day=day, month=month, title=title)
         elif file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
+            filename = unique_filename(filename)
             file.save(os.path.join(user_upload_dir, filename))
             
-            old_img = query_db("SELECT slug FROM img WHERE day=? and month=? and user=?", (day,month,session.get("user")), one=True)
+            old_img = query_db("SELECT slug FROM img WHERE day=? AND month=? AND user=?", (day,month,session.get("user")), one=True)
             if old_img:
                 if old_img["slug"]:
                     old_img_path = os.path.join(user_upload_dir, old_img["slug"])
                     if os.path.isfile(old_img_path):
                         os.remove(old_img_path)
-                query_db("delete FROM img WHERE day=? and month=? and user=?", (day,month,session.get("user")), update=True)
+                query_db("DELETE FROM img WHERE day=? AND month=? AND user=?", (day,month,session.get("user")), update=True)
         
             img_id = insert_db("img", fields=('day', 'month', 'user', 'title', 'slug'), args=(day, month, session.get("user"), title, filename))
             return jsonify(id=img_id, day=day, month=month, title=title)
