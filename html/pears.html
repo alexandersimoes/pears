@@ -1,25 +1,33 @@
 {% extends "template.html" %}
 {% block page %}
-      {% if imgs %}
-      {% for pear in imgs %}
-      <ul>
-        <li>{% if pear[0] %}<img src="/uploads/as/{{ pear[0].slug }}" />{% else %}&nbsp;{% endif %}</li>
-        <li>{% if pear[1] %}<img src="/uploads/jb/{{ pear[1].slug }}" />{% else %}&nbsp;{% endif %}</li>
-      </ul>
-      <div class="title-cont">
-        <span class="title l">{% if pear[0] %}{{ pear[0].title }} &bull; {{ pear[0].date }}{% if pear[0].user == g.user %} &bull; <a href="{{ url_for('upload', img=pear[0].id) }}">edit <i class="fa fa-edit"></i></a>{% endif %}{% else %}&nbsp;{% endif %}</span>
-        <span class="title r">{% if pear[1] %}{{ pear[1].date }} &bull; {{ pear[1].title }}{% if pear[1].user == g.user %} &bull; <a href="{{ url_for('upload', img=pear[1].id) }}">edit <i class="fa fa-edit"></i></a>{% endif %}{% else %}&nbsp;{% endif %}</span>
-      </div>
-      
-      {% if loop.first %}
-      <h2 class="more"><span class="kern">some other <br /></span>Photos <span class="kern">of</span> <span style="color:{{ month.color }}">{{ month.name }}</span></h2>
-      {% endif %}
-      {% endfor %}
-      {% else %}
-      <br />
-      <br />
-      <h2 class="more">No images uploaded yet :-(</h2>
-      {% endif %}
+      {%- for month in imgs %}
+        {%- set month_color = month.color %}
+        {%- set month_name = month.name %}
+        {%- set month_imgs = month.imgs %}
+        {%- set outer_loop = loop %}
+        
+        {%- for pair in month_imgs %}
+
+        {%- if loop.first and not outer_loop.first %}
+        <h2 class="more"><span class="kern">some other <br /></span>Photos <span class="kern">of</span> <span style="color:{{ month_color }}">{{ month_name }}</span></h2>
+        {%- endif %}
+        
+        <ul>
+          <li>{% if pair[0] %}<img src="/uploads/as/{{ pair[0].slug }}" />{% else %}&nbsp;{% endif %}</li>
+          <li>{% if pair[1] %}<img src="/uploads/jb/{{ pair[1].slug }}" />{% else %}&nbsp;{% endif %}</li>
+        </ul>
+        <div class="title-cont">
+          <span class="title l">{% if pair[0] %}{{ pair[0].title }} &bull; {{ pair[0].date }}{% if pair[0].user == g.user %} &bull; <a href="{{ url_for('upload', img=pair[0].id) }}">edit <i class="fa fa-edit"></i></a>{% endif %}{% else %}&nbsp;{% endif %}</span>
+          <span class="title r">{% if pair[1] %}{{ pair[1].date }} &bull; {{ pair[1].title }}{% if pair[1].user == g.user %} &bull; <a href="{{ url_for('upload', img=pair[1].id) }}">edit <i class="fa fa-edit"></i></a>{% endif %}{% else %}&nbsp;{% endif %}</span>
+        </div>
+        
+        {%- if loop.first and outer_loop.first %}
+        <h2 class="more"><span class="kern">some other <br /></span>Photos <span class="kern">of</span> <span style="color:{{ month_color }}">{{ month_name }}</span></h2>
+        {%- endif %}
+        
+        {%- endfor %}
+        
+      {%- endfor %}
       
       <h2 class="more">
         <span class="kern">more months... </span><br /> 

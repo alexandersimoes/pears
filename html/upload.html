@@ -25,8 +25,8 @@
     <h2>Month</h2>
     <div class="data">
       <select name="month">
-        <option value="2" {% if img and img.month == 2 %}selected="selected"{% elif this_month == 2 %}selected="selected"{% endif %}>February</option>
-        <option value="3" {% if img and img.month == 3 %}selected="selected"{% elif this_month == 3 %}selected="selected"{% endif %}>March</option>
+        <option value="2" {% if img %}{% if img.month == 2 %}selected="selected"{% endif %}{% elif this_month == 2 %}selected="selected"{% endif %}>February</option>
+        <option value="3" {% if img %}{% if img.month == 3 %}selected="selected"{% endif %}{% elif this_month == 3 %}selected="selected"{% endif %}>March</option>
       </select>
     </div>
   </section>
@@ -36,7 +36,7 @@
     <div class="data">
       <select name="day">
         {% for day in days_in_month %}
-        <option value="{{ day }}" {% if img and img.day == day %}selected="selected"{% elif today == day %}selected="selected"{% endif %}>{{ day }}</option>
+        <option value="{{ day }}" {% if img %}{% if img.day == day %}selected="selected"{% endif %}{% elif today == day %}selected="selected"{% endif %}>{{ day }}</option>
         {% endfor %}
       </select>
     </div>

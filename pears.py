@@ -12,6 +12,12 @@ app.config['DATABASE'] = os.path.join(os.path.dirname(__file__), "pears.db")
 app.config['DEBUG'] = True
 app.config['UPLOAD_FOLDER'] = os.path.join(os.path.dirname(__file__), 'uploads')
 
+months = [
+    (2, "February", "red"),
+    (3, "March", "#ffd530"),
+]
+months_dict = {m[0]:m for m in months}
+
 '''
     Used for finding environment variables through configuration
     if a default is not given, the site will raise an exception
@@ -90,50 +96,29 @@ def index():
 
 @app.route('/photophoto/')
 @app.route('/photophoto/<month>/')
-def home(month=dt.now().strftime("%B")):
-    month = month.capitalize()
-    month_num = dt.strptime(month,"%B").month
+def home(month=None):
+    imgs = []
+    for m_id, m_name, m_color in reversed(months):
+        this_month = {"color":m_color, "imgs":[], "name":m_name}
+        
+        as_imgs = query_db("SELECT * FROM img WHERE month = ? and user=? ORDER BY month DESC, day DESC", (m_id, "alexandersimoes@gmail.com",))
+        jb_imgs = query_db("SELECT * FROM img WHERE month = ? and user=? ORDER BY month DESC, day DESC", (m_id, "jnoelbasil@gmail.com",))
+        
+        for img in izip_longest(as_imgs, jb_imgs):
+            new_img = []
+            for i in img:
+                if i:
+                    i = dict(i)
+                    i['date'] = custom_strftime('%B {S}', dt(2015, i['month'], i['day']))
+                new_img.append(i)
+            this_month["imgs"].append(new_img)
+        
+        imgs.append(this_month)
     
-    month_color = {2: "red", 3:"#ffd530"}
-    
-    as_imgs = query_db("SELECT * FROM img WHERE month in (?) and user=? ORDER BY month DESC, day DESC", (month_num, "alexandersimoes@gmail.com",))
-    jb_imgs = query_db("SELECT * FROM img WHERE month in (?) and user=? ORDER BY month DESC, day DESC", (month_num, "jnoelbasil@gmail.com",))
-    # raise Exception(list(izip_longest(as_imgs, jb_imgs)))
-    
-    pears = []
-    for pear in izip_longest(as_imgs, jb_imgs):
-        new_pear = []
-        for p in pear:
-            if p:
-                p = dict(p)
-                p['date'] = custom_strftime('%B {S}', dt(2015, p['month'], p['day']))
-            new_pear.append(p)
-        pears.append(new_pear)
-    
-    return render_template('pears.html', imgs=pears, month={"name":month, "color":month_color[month_num]})
-
-@app.route('/photophoto2/')
-def home2():
-    
-    as_imgs = query_db("SELECT * FROM img WHERE month=2 and user=? ORDER BY day DESC", ("alexandersimoes@gmail.com",))
-    jb_imgs = query_db("SELECT * FROM img WHERE month=2 and user=? ORDER BY day DESC", ("jnoelbasil@gmail.com",))
-    # raise Exception(list(izip_longest(as_imgs, jb_imgs)))
-    
-    pears = []
-    for pear in izip_longest(as_imgs, jb_imgs):
-        new_pear = []
-        for p in pear:
-            if p:
-                p = dict(p)
-                p['date'] = custom_strftime('%B {S}', dt(2015, p['month'], p['day']))
-            new_pear.append(p)
-        pears.append(new_pear)
-    
-    return render_template('pears2.html', imgs=pears)
+    return render_template('pears.html', imgs=imgs)
 
 @app.route('/photophoto/toc/')
 def toc():
-    months = [(2, "February", "red"),(3, "March", "#ffd530"),]
     imgs = {}
     for m_id, m_name, m_color in months:
         first_day, days_in_month = monthrange(2015, m_id)
