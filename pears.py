@@ -7,6 +7,8 @@ from flask import Flask, render_template, request, redirect, url_for, abort, \
                     session, send_from_directory, jsonify, g, flash
 from werkzeug import secure_filename
 from werkzeug.security import check_password_hash
+from instagram.client import InstagramAPI
+
 app = Flask(__name__, template_folder="html")
 app.config['DATABASE'] = os.path.join(os.path.dirname(__file__), "pears.db")
 app.config['DEBUG'] = True
@@ -32,6 +34,17 @@ def get_env_variable(var_name, default=-1):
         raise Exception(error_msg)
 
 app.config['SECRET_KEY'] = get_env_variable("PEARS_SECRET_KEY")
+
+ig_api = InstagramAPI(client_id=get_env_variable("IG_CLIENT_ID"), client_secret=get_env_variable("IG_CLIENT_SECRET"))
+
+# This is a jinja custom filter
+@app.template_filter('strftime')
+def _jinja2_filter_datetime(date, fmt=None):
+    # convert instagram date string into python date/time
+    # pyDate = time.strptime(date,'%a %b %d %H:%M:%S +0000 %Y')
+    # raise Exception(date.__class__)
+    # return the formatted date.
+    return date.strftime(fmt or 'We are the %d, %b %Y')
 
 def connect_db():
     """Connects to the specific database."""
@@ -97,6 +110,21 @@ def index():
 @app.route('/photophoto/')
 @app.route('/photophoto/<month>/')
 def home(month=None):
+    as_media = []
+    jb_media = []
+    recent_media, next = ig_api.user_recent_media(user_id=1759445103)
+    for m in recent_media:
+        tags = [t.name for t in m.tags]
+        if "as" in tags:
+            as_media.append(m)
+        if "jb" in tags:
+            jb_media.append(m)
+    return render_template('ig_home.html', as_media=as_media, jb_media=jb_media)
+
+@app.route('/photophoto/old/')
+@app.route('/photophoto/old/<month>/')
+def home_olde(month=None):
+    
     imgs = []
     for m_id, m_name, m_color in reversed(months):
         this_month = {"color":m_color, "imgs":[], "name":m_name}
