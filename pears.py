@@ -114,7 +114,7 @@ def home(month=None):
     jb_media = []
     recent_media, next = ig_api.user_recent_media(user_id=1759445103)
     for m in recent_media:
-        tags = [t.name for t in m.tags]
+        tags = [t.name for t in m.tags] if hasattr(m, "tags") else []
         if "as" in tags:
             as_media.append(m)
         if "jb" in tags:
